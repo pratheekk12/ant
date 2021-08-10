@@ -1,15 +1,21 @@
-import React from 'react'
+import React,{useState} from 'react'
 import EmployeeItem from './EmployeeItem'
 
 const EmployeeList = (props) => {
     const {data} = props
+    const [details,setDetails] = useState(false)
 
     console.log(data)
 
+
+    const handleButton = (e)=>{
+        setDetails(!details)
+    }
     return(
         <div>
+            <button onClick={handleButton}>View Details</button>
             {
-                data.length > 0 ? (
+                data.length > 0 && details ? (
                     <div>
                         <br/>
                         {
@@ -23,7 +29,7 @@ const EmployeeList = (props) => {
                         }
                     </div>
                 ) : (
-                    <div><p>No employee found</p></div>
+                    <div></div>
                 )
             }
         </div>
