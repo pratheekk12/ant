@@ -3,9 +3,33 @@ import EmployeeItem from './EmployeeItem'
 
 const EmployeeList = (props) => {
     const {data} = props
-    return({
+
+    console.log(data)
+
+    return(
+        <div>
+            {
+                data.length > 0 ? (
+                    <div>
+                        <br/>
+                        {
+                           data.map((ele)=>{
+                               return (
+                                <EmployeeItem 
+                                    key={ele.id} 
+                                    {...ele}/>
+                               )
+                           }) 
+                        }
+                    </div>
+                ) : (
+                    <div><p>No employee found</p></div>
+                )
+            }
+        </div>
         
-    })
+    )
+}
        
     //     {
     //         data.length > 0  ? (

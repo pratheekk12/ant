@@ -3,7 +3,7 @@ import './App.css'
 
 const EmployeeForm = (props) => {
   const {addItems ,data} = props
-  const [id , setId] = useState(0)
+  const [id , setId] = useState("")
   const [name , setName] = useState('')
   const [designation , setDesignation] = useState('')
   const [contact , setContact] = useState('')
@@ -12,6 +12,7 @@ const EmployeeForm = (props) => {
   const [date , setDate] = useState('')
   const [forms , setForms] = useState({})
   const errors = {}
+  const phoneNumbers = []
 
   const changeName = (e) => {
     setName(e.target.value)
@@ -20,8 +21,27 @@ const EmployeeForm = (props) => {
     setDesignation(e.target.value)
   }
   const changeContact = (e) => {
-    setContact(e.target.value.replace(/\D/g,''))
+    setContact(e.target.value)
+  
   }
+
+  const addPhoneNumber =(e)=>{
+    e.preventDefault()
+    if(type && contact){
+      let r = {
+        "type" : type,
+        "number" : contact 
+      }
+      if(phoneNumbers.length > 4){
+        alert(`Maximum four numbers can be entered`)
+      }else {
+        phoneNumbers.push(r)
+      }
+    }
+    
+    
+  }
+
   const changeType = (e) => {
     setType(e.target.value)
   }
@@ -50,14 +70,10 @@ const EmployeeForm = (props) => {
     runValidations()
 
     if(Object.keys(errors).length === 0){
-      if(data.length === 0){
-        setId(1)
-      }else{
-        setId(data.length + 1)
-      }
+      let i = data.length + 1
       setForms({})
      const formData = {
-       id : id ,
+       id : i ,
        name : name ,
        designation : designation,
        contact : contact,
@@ -80,42 +96,43 @@ const EmployeeForm = (props) => {
   }
 }
 
+console.log(id , "idddddd")
 
   return(
-      <div >
+      <div>
       
       <form onSubmit={handleChange}>
         <div >
 
-        <label>Name  </label>
+        <label>Name  : </label>
         <input type="text" value={name} onChange={changeName} />
         {
           forms.name && <span>{forms.name}</span>
         }
         </div>
         <div ><br/>
-        <label >Designation  </label>
+        <label >Designation  : </label>
         <input type="text" value={designation} onChange={changeDesignation} />
        
         </div>
         <div ><br/>
-        <label >Contact Details  </label>
+        <label >Contact Details  : </label>
         <input type="text" placeholder="Type" value={type} onChange={changeType}/>
-        <input type="text" placeholder="Phone Number" value={contact} onChange={changeContact} />
+        <input type="number" placeholder="Phone Number" value={contact} onChange={changeContact} />
         {
           forms.contact && <span>{forms.contact}</span>
         }
-         <button >Add</button>
+         <button onClick={addPhoneNumber}>Add</button>
         </div><br/>
         <div >
-        <label>Skills  </label>
+        <label>Skills : </label>
         <input type="text" value={skills} onChange={changeSkills} />
         <button>Add</button>
         </div><br/>
         <div>
-        <label >Date Of Birth  </label>
+        <label >Date Of Birth  : </label>
         <input type="date" value={date} onChange={changeDate}/>
-        </div>
+        </div><br/>
         <div>
           <input type="submit" value="Add Employee"/>
         </div>
